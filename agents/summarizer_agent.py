@@ -9,7 +9,20 @@ import config
 # waiting on them one by one. Capped low to stay polite to the API.
 _MAX_WORKERS = 8
 
-_client = OpenAI(api_key=config.NVIDIA_API_KEY, base_url=config.NVIDIA_BASE_URL)
+# Built lazily on first use so importing this module doesn't require the API
+# key. That lets config.validate() report a missing key cleanly in main()
+# instead of OpenAI() blowing up with a cryptic error at import time.
+_client: OpenAI | None = None
+
+
+def _get_client() -> OpenAI:
+    global _client
+    if _client is None:
+        _client = OpenAI(
+            api_key=config.NVIDIA_API_KEY, base_url=config.NVIDIA_BASE_URL
+        )
+    return _client
+
 
 PROMPT = """Given this {source}:
 Title: {title}
@@ -21,7 +34,7 @@ changed and why it matters). Be specific and concrete. No hype, no preamble."""
 
 def _summarize_one(item: dict) -> str:
     try:
-        resp = _client.chat.completions.create(
+        resp = _get_client().chat.completions.create(
             model=config.NVIDIA_MODEL,
             messages=[
                 {
