@@ -2,15 +2,18 @@
 
 Watches your favorite GitHub repos for **new releases** and pulls top daily posts
 from a few subreddits, summarizes each with the NVIDIA GLM-5.1 API, and delivers a
-daily digest to **Telegram** and **email**. Runs on **GitHub Actions** at 06:00 UTC.
+daily digest to **Telegram** and **email**. Runs on **GitHub Actions** daily at
+05:00 UTC (07:00 Amsterdam, summer time).
+
+![Daily Digest overview](image.png)
 
 ## Architecture
 
 ```
-GitHub Actions (cron 06:00 UTC)
+GitHub Actions (cron 05:00 UTC)
   └── main.py
        ├── agents/github_agent.py    → new releases of repos in FAVORITE_REPOS
-       ├── agents/reddit_agent.py    → r/artificial, r/Python, r/SaaS, r/java (OAuth)
+       ├── agents/reddit_agent.py    → r/artificial, r/Python, r/SaaS, r/java (RSS)
        ├── storage.py                → dedup vs seen.json (committed back)
        ├── agents/summarizer_agent.py→ NVIDIA GLM-5.1, one sentence per item
        ├── delivery/telegram_sender.py
