@@ -1,9 +1,10 @@
 # Daily Digest
 
-Watches your favorite GitHub repos for **new releases** and pulls top daily posts
-from a few subreddits, summarizes each with the NVIDIA GLM-5.1 API, and delivers a
-daily digest to **Telegram** and **email**. Runs on **GitHub Actions** daily at
-05:00 UTC (07:00 Amsterdam, summer time).
+Watches your favorite GitHub repos for **new releases**, pulls top daily posts
+from a few subreddits, and grabs the **Hacker News** front page, summarizes each
+with the NVIDIA GLM-5.1 API, and delivers a daily digest to **Telegram** and
+**email**. Runs on **GitHub Actions** daily at 05:00 UTC (07:00 Amsterdam,
+summer time).
 
 ![Daily Digest overview](image.png)
 
@@ -14,6 +15,7 @@ GitHub Actions (cron 05:00 UTC)
   └── main.py
        ├── agents/github_agent.py    → new releases of repos in FAVORITE_REPOS
        ├── agents/reddit_agent.py    → r/artificial, r/Python, r/SaaS, r/java (RSS)
+       ├── agents/hacker_news_agent.py→ news.ycombinator.com front page (Algolia API)
        ├── storage.py                → dedup vs seen.json (committed back)
        ├── agents/summarizer_agent.py→ NVIDIA GLM-5.1, one sentence per item
        ├── delivery/telegram_sender.py
@@ -46,7 +48,8 @@ Reddit needs no credentials — the digest reads the public per-subreddit RSS fe
 
 ### Which repos / subreddits
 
-Edit `FAVORITE_REPOS` (format `owner/repo`) and `SUBREDDITS` in [config.py](config.py).
+Edit `FAVORITE_REPOS` (format `owner/repo`), `SUBREDDITS`, and the `*_LIMIT`
+counts in [config.py](config.py). Hacker News needs no config beyond `HN_LIMIT`.
 
 ### Reddit
 

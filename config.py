@@ -41,6 +41,7 @@ FAVORITE_REPOS = [
 ]
 SUBREDDITS = ["artificial", "Python", "SaaS", "java"]
 REDDIT_LIMIT = 5  # per subreddit, top posts of the day
+HN_LIMIT = 5  # top stories from the Hacker News front page
 
 _REQUIRED = {
     "NVIDIA_API_KEY": NVIDIA_API_KEY,

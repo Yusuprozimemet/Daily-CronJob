@@ -1,6 +1,6 @@
 """Orchestrates the daily digest: scrape -> dedup -> summarize -> deliver."""
 import config
-from agents import github_agent, reddit_agent, summarizer_agent
+from agents import github_agent, hacker_news_agent, reddit_agent, summarizer_agent
 from delivery import email_sender, telegram_sender
 from storage import filter_new, load_seen, save_seen
 
@@ -10,7 +10,12 @@ def main() -> None:
 
     # 1. Scrape sources (independent; failure of one shouldn't kill the run).
     items: list[dict] = []
-    for name, agent in (("releases", github_agent), ("reddit", reddit_agent)):
+    sources = (
+        ("releases", github_agent),
+        ("reddit", reddit_agent),
+        ("hackernews", hacker_news_agent),
+    )
+    for name, agent in sources:
         try:
             fetched = agent.fetch()
             print(f"[{name}] fetched {len(fetched)} item(s)")
