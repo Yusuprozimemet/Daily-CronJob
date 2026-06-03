@@ -1,4 +1,11 @@
-"""Sends the digest to Telegram as a Markdown message."""
+"""Sends the digest to Telegram as an HTML message.
+
+Telegram's legacy Markdown parser has no reliable way to escape arbitrary text
+(unbalanced _ * [ ` in a scraped title 400s the whole message), so we use HTML
+parse mode where every dynamic value is escaped — only &, <, > need handling.
+"""
+from html import escape
+
 import requests
 
 import config
@@ -8,12 +15,14 @@ MAX_LEN = 4096  # Telegram per-message limit
 
 
 def _format(items: list[dict]) -> str:
-    lines = [f"*Daily Digest* — {len(items)} new item(s)\n"]
+    lines = [f"<b>Daily Digest</b> — {len(items)} new item(s)\n"]
     for item in items:
-        lines.append(f"[{item['title']}]({item['url']})")
-        lines.append(f"_{item['source']} · {item['meta']}_")
+        title = escape(item["title"])
+        url = escape(item["url"], quote=True)
+        lines.append(f'<a href="{url}">{title}</a>')
+        lines.append(f"<i>{escape(item['source'])} · {escape(item['meta'])}</i>")
         if item.get("why_it_matters"):
-            lines.append(item["why_it_matters"])
+            lines.append(escape(item["why_it_matters"]))
         lines.append("")
     return "\n".join(lines)
 
@@ -24,7 +33,7 @@ def _send_chunk(text: str) -> None:
         json={
             "chat_id": config.TELEGRAM_CHAT_ID,
             "text": text,
-            "parse_mode": "Markdown",
+            "parse_mode": "HTML",
             "disable_web_page_preview": True,
         },
         timeout=20,

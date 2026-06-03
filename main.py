@@ -1,8 +1,11 @@
 """Orchestrates the daily digest: scrape -> dedup -> summarize -> deliver."""
 import config
-from agents import github_agent, hacker_news_agent, reddit_agent, summarizer_agent
+from agents import hacker_news_agent, reddit_agent, summarizer_agent
 from delivery import email_sender, telegram_sender
 from storage import filter_new, load_seen, save_seen
+
+# GitHub releases collection is paused for now — focusing on Reddit + Hacker News.
+# To re-enable: add `github_agent` back to the import above and the sources tuple.
 
 
 def main() -> None:
@@ -11,7 +14,6 @@ def main() -> None:
     # 1. Scrape sources (independent; failure of one shouldn't kill the run).
     items: list[dict] = []
     sources = (
-        ("releases", github_agent),
         ("reddit", reddit_agent),
         ("hackernews", hacker_news_agent),
     )

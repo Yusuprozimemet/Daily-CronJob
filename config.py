@@ -11,7 +11,9 @@ load_dotenv()  # no-op in CI where .env doesn't exist
 # --- NVIDIA / summarizer ---
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
-NVIDIA_MODEL = "z-ai/glm-5.1"
+# meta/llama-3.3-70b-instruct (~6s/call) — GLM-5.1's NIM free-tier endpoint
+# hangs (even tiny calls time out), so we use the proven fast model instead.
+NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
 # --- Email ---
 GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
@@ -39,7 +41,17 @@ FAVORITE_REPOS = [
     "openai/openai-python",
     "astral-sh/uv",
 ]
-SUBREDDITS = ["artificial", "Python", "SaaS", "java"]
+# GitHub-project sources: subs for sharing/discovering repos and projects,
+# plus SaaS/startup/indie-builder subs where founders share what they're building.
+# (ProgrammerHumor only occasionally has showcase posts — kept low-priority.)
+SUBREDDITS = [
+    "coolgithubprojects",
+    "opensource",
+    "SaaS",
+    "indiehackers",
+    "SideProject",
+    "Startup_Ideas",
+]
 REDDIT_LIMIT = 5  # per subreddit, top posts of the day
 HN_LIMIT = 5  # top stories from the Hacker News front page
 
