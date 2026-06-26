@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.svg" alt="Daily Digest" width="440" />
+</p>
+
 # Daily Digest
 
 Watches your favorite GitHub repos for **new releases**, pulls top daily posts

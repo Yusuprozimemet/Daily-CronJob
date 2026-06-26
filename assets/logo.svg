@@ -1,0 +1,21 @@
+<svg width="640" height="200" viewBox="0 0 640 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Daily Digest">
+  <!-- panel: dark navy, shared across the series; keeps the green wordmark legible on light and dark backgrounds -->
+  <rect x="0.5" y="0.5" width="639" height="199" rx="28" fill="#0A0E1A" stroke="#1B2336"/>
+  <!-- icon tile -->
+  <rect x="28" y="28" width="144" height="144" rx="32" fill="#0F1629"/>
+  <rect x="28.5" y="28.5" width="143" height="143" rx="31.5" fill="none" stroke="#1B2336"/>
+  <!-- digest list: bullets (brand green) + summarized lines -->
+  <g>
+    <rect x="58" y="70" width="13" height="13" rx="3.5" fill="#5fbf38"/>
+    <rect x="80" y="72" width="58" height="9" rx="4.5" fill="#5fbf38" opacity="0.55"/>
+    <rect x="58" y="96" width="13" height="13" rx="3.5" fill="#5fbf38"/>
+    <rect x="80" y="98" width="58" height="9" rx="4.5" fill="#5fbf38" opacity="0.55"/>
+    <rect x="58" y="122" width="13" height="13" rx="3.5" fill="#5fbf38"/>
+    <rect x="80" y="124" width="44" height="9" rx="4.5" fill="#5fbf38" opacity="0.55"/>
+  </g>
+  <!-- series blue accent dot: new items delivered -->
+  <circle cx="150" cy="56" r="14" fill="#2bb3f0" stroke="#0F1629" stroke-width="5"/>
+  <!-- wordmark -->
+  <text x="204" y="106" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="700" fill="#5fbf38">Daily Digest</text>
+  <text x="206" y="142" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="19" font-weight="500" letter-spacing="0.3" fill="#8a909c">Releases, Reddit &amp; HN &#183; summarized daily</text>
+</svg>
